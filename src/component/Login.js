@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidateData } from "../utils/Validate";
+import BG from "../Images/BG.jpg"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -86,12 +87,8 @@ const Login = () => {
   return (
     <div className="">
       <Header />
-      <div className="bg-black absolute">
-        <img
-          className="opacity-50 w-[12800px]"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/dae1f45f-c2c5-4a62-8d58-6e1b0c6b2d8e/6d1fb8a4-5844-42a4-9b01-1c6c128acf19/IN-en-20240827-TRIFECTA-perspective_WEB_c292a608-cdc6-4686-8dc8-405bfcf753af_large.jpg"
-          alt="img"
-        />
+      <div className="bg-black absolute w-[100%] h-[100%]">
+      <img className="bg-cover  top-0 bottom-0 left-0 right-0 h-[100%] w-[100%]" src={BG} alt="Bg"/>
       </div>
       <form
         className="absolute w-3/12 align-middle bg-black my-36 mx-auto right-0 left-0 p-8 bg-opacity-70 rounded-lg"
