@@ -4,25 +4,32 @@ import { checkValidateData } from "../utils/Validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 const Login = () => {
+  const navigate = useNavigate();
   const [signIn, setSignIn] = useState(true);
+
+  const dispatch = useDispatch();
+  const [errMessage, setErrMessage] = useState();
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
   const toggleSignIn = () => {
     setSignIn(!signIn);
   };
-
-  const [errMessage, setErrMessage] = useState();
-  const email = useRef(null);
-  const password = useRef(null);
   const handleSubmit = () => {
     const message = checkValidateData(
       email.current.value,
       password.current.value
     );
     setErrMessage(message);
-    console.log(password.current.value)
-    if (message!==null) return; // if there is error in validation.
+    console.log(password.current.value);
+    if (message !== null) return; // if there is error in validation.
     // if no error Sign in/ Sign up
 
     //SignUp...
@@ -35,6 +42,23 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {});
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -50,6 +74,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -79,6 +104,7 @@ const Login = () => {
         </h1>
         {!signIn && (
           <input
+            ref={name}
             type="text"
             placeholder="Name"
             className="m-4 p-2 bg-gray-700 w-full  text-white"

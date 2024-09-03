@@ -1,8 +1,10 @@
 import BG from "../Images/BG.jpg"
+import Header from "./Header";
 const Browse =()=>{
     return(
         <div>
-            <img className="bg-cover w-[100%]" src={BG} alt="Bg"/>
+            <div><Header/></div>
+            <img className="bg-cover w-screen" src={BG} alt="Bg"/>
         </div>
     )
 }
