@@ -59,7 +59,6 @@ const Login = () => {
               );
             })
             .catch((error) => {});
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -75,7 +74,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
