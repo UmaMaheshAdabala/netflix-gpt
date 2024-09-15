@@ -18,4 +18,5 @@ const useTopRated = () => {
   }, []);
 };
 
+
 export default useTopRated;
